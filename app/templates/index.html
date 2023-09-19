@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Gallery</title>
+    <style>
+        /* Style for the "Join Premium" link */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed; /* Fix the header to the top */
+            top: 20px; /* Place it at the top of the viewport */
+            left: 0;
+            width: 100%; /* Take up the full width of the viewport */
+            background-color: #333; /* Header background color */
+            color: white; /* Header text color */
+            padding: 10px 0; /* Padding for spacing */
+            z-index: 1000; /* Ensure the header is above other content */
+        }
+
+        /* Adjust content spacing to accommodate the fixed header */
+        body {
+            padding-top: 40px; /* Add top padding to body to prevent content from being hidden behind the header */
+        }
+        .join-premium a {
+            background-color: #ff6600; /* Orange color */
+            color: white;
+            position: fixed;
+            padding: 10px 20px; /* Adjust size as needed */
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 48px;
+            border-radius: 5px;
+
+            transition: background-color 0.3s ease; /* Smooth background color transition on hover */
+        }
+
+        /* Hover effect for the link */
+        .join-premium a:hover {
+            background-color: #ff8800; /* Slightly lighter orange on hover */
+        }
+        /* Center-align the buttons */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh; /* Center vertically on the screen */
+        }
+
+        /* Styles for the previous button */
+        .pagination-button.prev {
+            background-color: #4CAF50; /* Green color */
+            color: white;
+            padding: 10px 20px; /* Adjust size as needed */
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 48px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-right: 10px; 
+        }
+
+        /* Styles for the next button */
+        .pagination-button.next {
+            background-color: #f44336; /* Red color */
+            color: white;
+            padding: 10px 20px; /* Adjust size as needed */
+            border: none;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 48px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px; 
+        }
+
+        /* Hover effect for buttons */
+        .pagination-button:hover {
+            opacity: 0.8;
+        }
+    </style>
+    <style>
+        .video-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .video-item {
+            width: calc(25% - 10px);
+            margin-bottom: 10px;
+        }
+
+        .video-item img {
+            width: 300px;
+            max-height: 226px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Gallery</h1>
+    <div class="join-premium header">
+        <a href="https://cosmofeed.com/vp/64feaa4ec0098b001e138902">Join Premium</a>
+    </div>
+    <div class="video-container">
+        {% for video in videos %}
+            <div class="video-item">
+                <a href="{{ url_for('play', video_id=loop.index0) }}">
+                    <img src="{{ video['img'] }}" alt="{{ video['title'] }}">
+                    <h2>{{video['title']}}</h2>
+                    <p>Duration: {{video["dur"]}}</p>
+                </a>
+            </div>
+    {% endfor %}
+    </div>
+
+    <!-- Pagination links -->
+    <div class="pagination">
+        {% if page > 1 %}
+            <a href="{{ url_for('index', page=page-1) }}" class="pagination-button prev">Previous</a>
+        {% endif %}
+        {% if (page - 1) * items_per_page + videos|length < videos_len %}
+            <a href="{{ url_for('index', page=page+1) }}" class="pagination-button next">Next</a>
+        {% endif %}
+    </div>
+
+</body>
+</html>

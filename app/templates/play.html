@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video Player</title>
+    <style>
+
+        /* Adjust content spacing to accommodate the fixed header */
+        body {
+            padding-top: 40px; /* Add top padding to body to prevent content from being hidden behind the header */
+        }
+        .join-premium a {
+            background-color: #ff6600; /* Orange color */
+            color: white;
+            display: flex;
+            position: fixed;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 20px; /* Adjust size as needed */
+            text-align: center;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 48px;
+            border-radius: 5px;
+
+            transition: background-color 0.3s ease; /* Smooth background color transition on hover */
+        }
+
+        /* Hover effect for the link */
+        .join-premium a:hover {
+            background-color: #ff8800; /* Slightly lighter orange on hover */
+        }
+       /* CSS for video player */
+       .video-container {
+            width: 100%;
+            position: relative;
+        }
+
+        video {
+            width: 100%;
+        }
+
+        /* CSS for video controls */
+
+        video::-webkit-media-controls-play-button,
+        video::-webkit-media-controls-volume-slider,
+        video::-webkit-media-controls-mute-button,
+        video::-webkit-media-controls-timeline {
+            width: auto; /* Adjust the size of the control buttons as needed */
+            height: auto; /* Adjust the size of the control buttons as needed */
+        }
+
+        /* Center the play button vertically */
+        video::-webkit-media-controls-play-button {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+        </style>
+</head>
+
+
+<body>
+    <h1>Video Player</h1>
+
+    <!-- Video player container -->
+    <div class="video-container">
+        <video width="100%" controls>
+            <source src="{{ selected_video['dwn'] }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
+    <!-- Back to Gallery link -->
+    <div class="container">
+        
+            <button class="join-premium">
+                <a href="{{ url_for('index') }}">Back to Gallery</a>
+            </button>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <button class="join-premium">
+                <a href="https://cosmofeed.com/vp/64feaa4ec0098b001e138902">Join Premium</a>
+            </button>
+    </div>
+    
+
+</body>
+</html>
