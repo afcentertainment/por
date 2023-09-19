@@ -4,7 +4,7 @@ import pandas as pd
 app = Flask(__name__)
 
 # Define the path to your CSV file
-csv_file_path = "output.csv" # Update with the actual path to your CSV file
+csv_file_path = "videos.csv" # Update with the actual path to your CSV file
  # Update with the actual path to your CSV file
 
 # Number of items to display per page
