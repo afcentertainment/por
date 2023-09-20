@@ -45,25 +45,43 @@ def play(video_id):
     soup = BeautifulSoup(html, 'html.parser')
     arr = []
     src_value="https://chiggywiggy.com/media/videos/mp4/14239_720p.mp4"
+    source_tag240 = soup.find('source', type="video/mp4", title="240p")
+    source_tag360 = soup.find('source', type="video/mp4", title="360p")
     source_tag480 = soup.find('source', type="video/mp4", title="480p")
     source_tag720 = soup.find('source', type="video/mp4", title="720p")
     source_tag1080 = soup.find('source', type="video/mp4", title="1080p")
-    source_tag240 = soup.find('source', type="video/mp4", title="240p")
+    source_tag1440 = soup.find('source', type="video/mp4", title="1440p")
+    source_tag2160 = soup.find('source', type="video/mp4", title="2160p")
+    source_tag4320 = soup.find('source', type="video/mp4", title="4320p")
 
-    if source_tag1080:
+    # Assign src_value based on the best available resolution
+    if source_tag4320:
+        src_value = source_tag4320['src']
+        print("Best Available Resolution: 4320p")
+    elif source_tag2160:
+        src_value = source_tag2160['src']
+        print("Best Available Resolution: 2160p")
+    elif source_tag1440:
+        src_value = source_tag1440['src']
+        print("Best Available Resolution: 1440p")
+    elif source_tag1080:
         src_value = source_tag1080['src']
-        print("Source URL:", src_value)
+        print("Best Available Resolution: 1080p")
     elif source_tag720:
         src_value = source_tag720['src']
-        print("Source URL:", src_value)
+        print("Best Available Resolution: 720p")
     elif source_tag480:
         src_value = source_tag480['src']
-        print("Source URL:", src_value)
+        print("Best Available Resolution: 480p")
+    elif source_tag360:
+        src_value = source_tag360['src']
+        print("Best Available Resolution: 360p")
     elif source_tag240:
         src_value = source_tag240['src']
-        print("Source URL:", src_value)
+        print("Best Available Resolution: 240p")
     else:
-        print("Source element not found.")
+        print("No video source element found for any resolution.")
+
     selected_video["dwn"]=src_value
     return render_template('play.html', selected_video=selected_video)
 
