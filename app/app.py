@@ -41,21 +41,26 @@ def play(video_id):
     url=selected_video["vdo"]
     r = requests.get(url)
     html = r.content
+    print(url)
     soup = BeautifulSoup(html, 'html.parser')
     arr = []
     src_value="https://chiggywiggy.com/media/videos/mp4/14239_720p.mp4"
     source_tag480 = soup.find('source', type="video/mp4", title="480p")
     source_tag720 = soup.find('source', type="video/mp4", title="720p")
     source_tag1080 = soup.find('source', type="video/mp4", title="1080p")
+    source_tag240 = soup.find('source', type="video/mp4", title="240p")
 
-    if source_tag480:
-        src_value = source_tag480['src']
+    if source_tag1080:
+        src_value = source_tag1080['src']
         print("Source URL:", src_value)
     elif source_tag720:
         src_value = source_tag720['src']
         print("Source URL:", src_value)
-    elif source_tag1080:
-        src_value = source_tag1080['src']
+    elif source_tag480:
+        src_value = source_tag480['src']
+        print("Source URL:", src_value)
+    elif source_tag240:
+        src_value = source_tag240['src']
         print("Source URL:", src_value)
     else:
         print("Source element not found.")
