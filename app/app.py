@@ -85,5 +85,19 @@ def play(video_id):
     selected_video["dwn"]=src_value
     return render_template('play.html', selected_video=selected_video)
 
+@app.route('/playlink')
+def playlink():
+    # Get the video link from the query parameter
+    video_link={}
+    video_link["dwn"] = request.args.get('link')
+
+    # Fetch the video source URL from the website based on the provided video link
+    # video_source_url = fetch_video_source(video_link)
+
+    # Pass the video source URL to the template
+    return render_template('play.html', selected_video=video_link)
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
