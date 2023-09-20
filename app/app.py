@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
 import pandas as pd
-
+import requests
+from bs4 import BeautifulSoup
 app = Flask(__name__)
 
 # Define the path to your CSV file
-csv_file_path = "videos.csv" # Update with the actual path to your CSV file
+csv_file_path = "website\\por-main\\app\\videos.csv" # Update with the actual path to your CSV file
  # Update with the actual path to your CSV file
 
 # Number of items to display per page
@@ -37,7 +38,28 @@ def play(video_id):
 
     # Get the selected video by video_id
     selected_video = df.iloc[video_id]
+    url=selected_video["vdo"]
+    r = requests.get(url)
+    html = r.content
+    soup = BeautifulSoup(html, 'html.parser')
+    arr = []
+    src_value="https://chiggywiggy.com/media/videos/mp4/14239_720p.mp4"
+    source_tag480 = soup.find('source', type="video/mp4", title="480p")
+    source_tag720 = soup.find('source', type="video/mp4", title="720p")
+    source_tag1080 = soup.find('source', type="video/mp4", title="1080p")
 
+    if source_tag480:
+        src_value = source_tag480['src']
+        print("Source URL:", src_value)
+    elif source_tag720:
+        src_value = source_tag720['src']
+        print("Source URL:", src_value)
+    elif source_tag1080:
+        src_value = source_tag1080['src']
+        print("Source URL:", src_value)
+    else:
+        print("Source element not found.")
+    selected_video["dwn"]=src_value
     return render_template('play.html', selected_video=selected_video)
 
 if __name__ == '__main__':
