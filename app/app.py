@@ -83,19 +83,68 @@ def play(video_id):
         print("No video source element found for any resolution.")
 
     selected_video["dwn"]=src_value
-    return render_template('play.html', selected_video=selected_video)
+    return redirect(src_value)
+
+@app.route('/playsrc')
+def playsrc():
+    # Get the video link from the query parameter
+    src_value= request.args.get('link')
+
+    return redirect(src_value)
 
 @app.route('/playlink')
 def playlink():
     # Get the video link from the query parameter
     video_link={}
-    video_link["dwn"] = request.args.get('link')
+    url = request.args.get('link')
+    r = requests.get(url)
+    html = r.content
+    print(url)
+    soup = BeautifulSoup(html, 'html.parser')
+    arr = []
+    src_value="https://chiggywiggy.com/media/videos/mp4/14239_720p.mp4"
+    source_tag240 = soup.find('source', type="video/mp4", title="240p")
+    source_tag360 = soup.find('source', type="video/mp4", title="360p")
+    source_tag480 = soup.find('source', type="video/mp4", title="480p")
+    source_tag720 = soup.find('source', type="video/mp4", title="720p")
+    source_tag1080 = soup.find('source', type="video/mp4", title="1080p")
+    source_tag1440 = soup.find('source', type="video/mp4", title="1440p")
+    source_tag2160 = soup.find('source', type="video/mp4", title="2160p")
+    source_tag4320 = soup.find('source', type="video/mp4", title="4320p")
+
+    # Assign src_value based on the best available resolution
+    if source_tag4320:
+        src_value = source_tag4320['src']
+        print("Best Available Resolution: 4320p")
+    elif source_tag2160:
+        src_value = source_tag2160['src']
+        print("Best Available Resolution: 2160p")
+    elif source_tag1440:
+        src_value = source_tag1440['src']
+        print("Best Available Resolution: 1440p")
+    elif source_tag1080:
+        src_value = source_tag1080['src']
+        print("Best Available Resolution: 1080p")
+    elif source_tag720:
+        src_value = source_tag720['src']
+        print("Best Available Resolution: 720p")
+    elif source_tag480:
+        src_value = source_tag480['src']
+        print("Best Available Resolution: 480p")
+    elif source_tag360:
+        src_value = source_tag360['src']
+        print("Best Available Resolution: 360p")
+    elif source_tag240:
+        src_value = source_tag240['src']
+        print("Best Available Resolution: 240p")
+    else:
+        print("No video source element found for any resolution.")
 
     # Fetch the video source URL from the website based on the provided video link
     # video_source_url = fetch_video_source(video_link)
 
     # Pass the video source URL to the template
-    return render_template('play.html', selected_video=video_link)
+    return redirect(src_value)
 
 
 
