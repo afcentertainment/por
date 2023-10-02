@@ -131,12 +131,12 @@ def playlink():
     elif source_tag480:
         src_value = source_tag480['src']
         print("Best Available Resolution: 480p")
-    # elif source_tag360:
-    #     src_value = source_tag360['src']
-    #     print("Best Available Resolution: 360p")
-    # elif source_tag240:
-    #     src_value = source_tag240['src']
-    #     print("Best Available Resolution: 240p")
+    elif source_tag360:
+        src_value = source_tag360['src']
+        print("Best Available Resolution: 360p")
+    elif source_tag240:
+        src_value = source_tag240['src']
+        print("Best Available Resolution: 240p")
     else:
         print("No video source element found for any resolution.")
 
